@@ -1,0 +1,31 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main()
+{
+    char txt[30],app;
+    int position,i;
+    printf("\nEnter the text:\n");
+    scanf("%s",txt);
+    fflush(stdin);
+    printf("\nEnter the character to insert:\n");
+    scanf("%c",&app);
+    printf("\nEnter the position less than %d\n",strlen(txt));
+    scanf("%d",&position);
+    printf("\ndlestx");
+    position=position-1;
+    for(i=0;i<strlen(txt);i++)
+    {
+        if(position==i)
+        {
+            printf("dle%cdle%c",app,txt[i]);
+        }
+        else
+        {
+            printf("%c",txt[i]);
+        }
+    }
+    printf("dlectx\n");
+    return 0;
+}
+ 
