@@ -1,0 +1,44 @@
+import numpy as np
+import pandas as pd
+import scipy
+from scipy.stats import chi2
+ 
+np.random.seed(10)
+bottle=np.random.choice(a=["paper","cans","glass","others","plastic"],p=[0.05,0.15,0.25,0.05,0.5],size=1000)
+print(bottle)
+ 
+month=np.random.choice(a=["January","February","March"],p=[0.4,0.2,0.4],size=1000)
+month
+ 
+a=pd.DataFrame({"types":bottle,"months":month})
+b=pd.crosstab(a.types,a.months,margins=True)
+b.columns=["January","February","March","row_totals"]
+b.index=["papers","cans","glass","others","plastic","col_totals"]
+print(b)
+ 
+observed=b.iloc[0:5,0:3]
+ 
+expected=np.outer(b["row_totals"][0:5],b.loc["col_totals"][0:3])/1000
+print(expected)
+ 
+expected=pd.DataFrame(expected)
+expected.columns=["January","February","March"]
+expected.index=["paper","cans","glass","others","plastic"]
+expected
+ 
+chi_squared_stat=(((observed-expected)**2)/expected).sum().sum()
+chi_squared_stat
+ 
+critical_value=chi2.ppf(q=0.95,df=8)
+print("crtitical value:",critical_value)
+p_value=1-chi2.cdf(x=chi_squared_stat,df=8)
+print("P value:",p_value)
+ 
+ 
+#dwdm
+ 
+classify j48 iris
+cluster kmeans glass
+cluster hirearical glass
+associate apriori supermarket
+associate FP growth supermarket
