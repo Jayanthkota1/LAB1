@@ -1,0 +1,49 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+df = pd.read_csv("Social_Network_Ads.csv")
+X = df.iloc[:,[2,3]]
+Y = df.iloc[:,4]
+from sklearn.model_selection import train_test_split
+X_Train,X_Test,Y_Train,Y_Test = train_test_split(X,Y,test_size = 0.25,random_state =0)
+from sklearn.preprocessing import StandardScaler
+sc_X = StandardScaler()
+X_train = sc_X.fit_transform (X_Train)
+X_test = sc_X.transform(X_Test)
+from sklearn import svm
+from sklearn.svm import SVC
+cls = svm.SVC(kernel = "linear")
+cls.fit(X_train,Y_Train)
+pred = cls.predict(X_test)
+plt.scatter(X_Train.iloc[:, 0], X_Train.iloc[:, 1],c=Y_Train)
+plt.xlabel('Age')
+plt.ylabel('Estimated Salary')
+plt.title('training Data')
+plt.show()
+plt.scatter(X_Test.iloc[:, 0], X_Test.iloc[:, 1],c=Y_Test)
+plt.xlabel('Age')
+plt.ylabel('Estimated Salary')
+plt.title('training Data')
+plt.show()
+np.random.seed(0)
+X = np.r_[np.random.randn(50, 2) - [2, 2], np.random.randn(50, 2) + [2, 2]]
+Y = [0] * 50 + [1] * 50
+w = cls.coef_[0]
+a = -w[0] / w[1]
+xx = np.linspace(-2,2)
+yy = a * xx - (cls.intercept_[0] / w[1])
+b = cls.support_vectors_[0]
+yy_down = a * xx + (b[1] - a * b[0])
+b = cls.support_vectors_[-1]
+yy_up = a * xx + (b[1] - a * b[0])
+import pylab as p1
+p1.set_cmap(p1.cm.Paired)
+p1.plot(xx, yy, 'k-')
+p1.plot(xx, yy_down, 'k--')
+p1.plot(xx, yy_up, 'k--')
+p1.scatter(cls.support_vectors_[:, 0], cls.support_vectors_[:, 1],s=80, facecolors='none')
+p1.scatter(X[:, 0], X[:, 1], c=Y)
+p1.axis('tight')
+p1.show()
+from sklearn.metrics import classification_report
+print(classification_report(Y_Test,pred))
