@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <style>
+      body{
+        background-color: white;
+}
+      #cone {   
+        width: 150px;   
+        height: 150px;   
+        border-radius: 50%;   
+        border: 5px solid black;   
+        margin: 20px auto;
+      } 
+      .filled {   
+        background-color: red; 
+      } 
+    </style>
+  </head>
+  <body>
+    <center> <div id="cone"></div> 
+    <h1 id="heading">Empty Cone</h1> 
+    <p id="message">Click the link to fill the cone with ice cream!</p> 
+    <a href="#" id="ice-cream-link">Click here for ice cream!</a> </center>
+    <script>
+      const link = document.getElementById("ice-cream-link"); 
+      const cone = document.getElementById("cone"); 
+      const heading = document.getElementById("heading"); 
+      const message = document.getElementById("message"); 
+      let isFilled = false; 
+      link.addEventListener("click", () => {   isFilled = !isFilled;   cone.classList.toggle("filled");  
+      heading.textContent = isFilled ? "Yummy Ice Cream!" : "Empty Cone"; 
+      message.textContent = isFilled ? "Enjoy your ice cream!" : "Click the link to fill the cone with ice cream!"; });
+    </script>
+  </body>
+</html>
